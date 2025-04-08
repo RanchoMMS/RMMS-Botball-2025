@@ -4,6 +4,7 @@
 #define LEFT 0
 #define RIGHT 3
 #define compensation_rate 0.2
+#define claw_click 0
 
 // Turn 90 degrees right using one wheel
 void ow_turnr_90() {
@@ -36,7 +37,7 @@ void ow_turnl_45() {
 void turnl_90() {
     mav(RIGHT, 500);
     mav(LEFT, -500);
-    msleep(2700);
+    msleep(2500);
     mav(0, 0);
     mav(3, 0);
     msleep(20);
@@ -56,7 +57,7 @@ void turnl_45() {
 void turnr_90() {
     mav(RIGHT, -500);
     mav(LEFT, 500);
-    msleep(2500);
+    msleep(2600);
     mav(0, 0);
     mav(3, 0);
     msleep(20);
@@ -89,7 +90,7 @@ int Set_servo_position(int port, int value) {
         printf("Value exceeds limit\n");
         return 0;
     }
-    else if (port == 1 && (value < 850 || value > 1566)) { // Servo limit for port 1 is 850 to 1566
+    else if (port == 1 && (value < 750 || value > 1850)) { // Servo limit for port 1 is 850 to 1566
         printf("Value exceeds limit\n");
         return 0;
     }
@@ -113,10 +114,10 @@ void drive(int distance, int speed) {
     cmpc(0);
     cmpc(3);
     while (abs(gmpc(0)) < distance) {
-       
-         mav(LEFT, speed*1);
-         mav(RIGHT, speed*1);
-        
+
+        mav(LEFT, speed*1);
+        mav(RIGHT, speed*1);
+
     }
     mav(0, 0);
     mav(3, 0);
@@ -173,12 +174,12 @@ void line_follow(int distance, int speed) { //Declare function for line follow
         mav(0, speed - speed_modifier);
         mav(3, speed + speed_modifier);
     }
-  
+
     //Lock motors
     mav(0, 0);
     mav(3, 0);
     msleep(20);
-    
+
 }
 
 // Make a pause function for pausing during the game
@@ -188,74 +189,58 @@ void pause() {
     msleep(500);
 }
 
+void grab_drink() {
+    while (digital(claw_click) == 0) {
+        mav(RIGHT, 500);
+        mav(LEFT, -500);
+    }
+    mav(LEFT, 500);
+    mav(RIGHT, -500);
+    msleep(375);
+    mav(0, 0);
+    mav(3, 0);
+    msleep(20);
+    move_servo_down_or_close_claw(0, 1600, 542, 30);
+}
+
 int main() {
-    
     square_up_black_line(600); // Square up at the beginning of the game
-	ow_turnr_90(); // Turn right 90 degrees using one wheel
+    ow_turnr_90(); // Turn right 90 degrees using one wheel
     drive(1700, -1000); // Drive backwards to square up against the pvc pipe and fix both axis
+    drive(400, 1000);
     turnl_90(); // Turn left
     drive(1000, -1500); // Drive back a bit to prepare for a square up
     pause(); // Pause after fast driving
     square_up_black_line(600); // Square up again for safety
-    drive(3000, 1400); // Drive forward towards the cups
-    drive(2000, -1400); // Goes back
-    turnr_45(); // Turn right 45 degrees
-    drive(3500, 1400); // Drive towards the drink dispenser
-    turnl_45(); // Turn left 45 degrees to make the robot face the drink dispenser
-   	drive(3500,-1400); // Move back and prepare for square up
-    square_up_black_line(500); // Square up against black line
-    drive(3500,1400); // Drive towards the drink dispenser
-    // Long pause for pretending to grab drinks into the cup
-    pause();
-    pause();
-    pause();
-    pause();
-
-    drive(3500,-1400); // Drives back
-    turnr_90(); // Turns right 90 degrees
-    drive(3000,1400); // Go forward a bit
-    turnr_90(); // Turn right 90 degrees again
-    square_up_black_line(500); // Squares up on the black line near the beverage station
-    drive(300, -1400); // Moves back a little
-    turnl_90(); // Turns left
-    drive(7000, -1000); // Moves backward towards the PVC pipe to square up
-    turnl_90(); // Turns left
-    pause(); // Pause after turning and before squaring up towards the black line
-    square_up_black_line(500); // Squares up
-    drive(3000, 1400); // Drives towards the cup a second time to grab another cup
-    drive(2000, -1400); // Moves back
-    turnr_45(); // Turns 45 degrees
-    drive(3500, 1400); // Drive toward the drink dispenser
-    turnl_45(); // Turn left for the robot to face the drink dispenser
-   	drive(4100,-1400); // Move back
-    square_up_black_line(500); // Squares up facing black line
-    drive(3500,1400); // Go towards the drink dispenser
-    // Pause for time pretending to grab the remaining drink
-    pause();
-    pause();
-
-    drive(4100, -1400); // Drive backwards
-    square_up_black_line(500); // Square up on the black line
-    turnr_90(); // Turn right
-    drive(3000,1400); // Go forward a bit
-    turnr_90(); // Turn right again
-    square_up_black_line(500); // Square up on the black line facing the beverage station
-    drive(300, -1400); // Move back a bit
-    turnl_90(); // turn left
-    drive(7000, -1400); // go back and square up at pvc pipe
-    drive(500, 1400); // Drive forward a bit
-    turnr_90(); // turn right
-    drive(2500, -1400); // move back and prepare for black line square up
-    square_up_black_line(500); // square up at black line
-    drive(1000, -1400); // move back to grab entrees
-    // Pretending to grab entrees
-    pause();
-    pause();
-    
-    square_up_black_line(1000); // Squares up on the black line
-    ow_turnl_90(); // Turns left
-    drive(6000, 1400); // Goes towwards the trays
-    turnl_90(); // Turns left
-    drive(2500, -1400); // Squares up against the pvc pipe and puts the entree in
+    move_servo_down_or_close_claw(1, 1840, 1100, 30);
+    drive(3850, 1400);
+    move_servo_down_or_close_claw(0, 1600, 1000, 30);
+    drive(1600, -1400);
+    move_servo_up_or_open_claw(1, 1100, 1300, 30);
+    turnr_90();
+    drive(600, -1400);
+    square_up_black_line(500);
+    drive(1800, 1400);
+    turnr_90();
+    square_up_black_line(600);
+    turnr_90();
+    drive(300, -1000);
+    square_up_black_line(500);
+    move_servo_up_or_open_claw(0, 1000, 1600, 30);
+    move_servo_up_or_open_claw(1, 1300, 1800, 30);
+    drive(30, -600);
+    turnr_90();
+    drive(2500, -1400);
+    square_up_black_line(600);
+    move_servo_down_or_close_claw(1, 1800, 850, 30);
+    drive(4500, 1400);
+    grab_drink();
+    drive(3000, -1400);
+    move_servo_up_or_open_claw(1, 850, 1800, 30);
+    ow_turnl_90();
+    drive(300, -1000);
+    square_up_black_line(600);
+    drive(300, 400);
+    move_servo_up_or_open_claw(0, 542, 1600, 30);
     return 0;
 }
