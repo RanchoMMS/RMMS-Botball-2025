@@ -39,7 +39,7 @@ int Set_servo_position(int port, int value) {
         printf("Value exceeds limit\n");
         return 0;
     }
-    else if (port == 3 && (value < 641 || value > 1640)) { // Servo limit for port 3 is 641 to 1640
+    else if (port == 3 && (value < 641 || value > 1940)) { // Servo limit for port 3 is 641 to 1640
         printf("Value exceeds limit\n");
         return 0;
     }
@@ -110,7 +110,7 @@ void line_follow(int distance, int speed) { //Declare function for line follow
     //Clear motor position counters
     cmpc(0);
     while (abs(gmpc(0)) < distance) { //Make a while loop to follow line
-        int error = analog(3) - 3000; //Declare error variable
+        int error = analog(5) - 3000; //Declare error variable
         float speed_modifier = error * compensation_rate; //Declare speed_modifier variable
         mav(0, speed - speed_modifier);
         mav(3, speed + speed_modifier);
@@ -208,16 +208,22 @@ void turn(int angle){
     mav(0,0);
     mav(3,0);
     
-    
-    
-    
 }
 
+int distance_from_cup = 1200;
+
+void drive_until_cup() {
+    while (analog(4) < distance_from_cup) {
+        mav(0, 1000);
+        mav(3, 1000);
+    }
+    mav(0, 0);
+    mav(3, 0);
+}
 
 int whatcolor = 1; // 0 for red, 1 for green
 int main() {
     enable_servos();
-    move_servo_down_or_close_claw(1, 1600, 1000, 50);
    
     move_servo_down_or_close_claw(0, 1300, 900, 50);
     square_up_black_line(600); // Square up at the beginning of the game
@@ -229,31 +235,56 @@ int main() {
     pause(); // Pause after fast driving
     square_up_black_line(600); // Square up again for safety
     drive(400,1000);
-
+	
+    move_servo_down_or_close_claw(1, 1600, 1000, 30);
     int firstcup = decidecup(whatcolor);
     int blue = decidecup(2);
 
     printf("firstcup pos is %d and blue cup %d\n", firstcup,blue);
     
     if (firstcup == 2){
-        turn(-1.5);
-        drive(3200,1300);
+        move_servo_up_or_open_claw(1, 1000, 1600, 30);
+        turn(-2);
+        drive_until_cup();
+        move_servo_down_or_close_claw(1, 1600, 1000, 50);
+        drive(1100, 1000);
         move_servo_down_or_close_claw(0, 900, 700, 50);
         
     } else if (firstcup == 3){
+        move_servo_up_or_open_claw(1, 1000, 1600, 30);
         turn(4.5);
-        drive(3500,1300);
+        drive_until_cup();
+        move_servo_down_or_close_claw(1, 1600, 1000, 50);
+        drive(1100, 1000);
         move_servo_down_or_close_claw(0, 900, 700, 30);
     }else{
+        move_servo_up_or_open_claw(1, 1000, 1600, 30);
         turn(45);
         drive(2000,1300);
         turn(-87);
-        drive(2500,1300);
+        drive_until_cup();
+        move_servo_down_or_close_claw(1, 1600, 1000, 50);
+        drive(1100, 1000);
         move_servo_down_or_close_claw(0, 900, 700, 30);
         
     }
     pause();
-    drive(2000,-1300);
+    move_servo_up_or_open_claw(3, 1000, 1900, 30);
+    drive(1000,-1300);
+    turn(45);
+    drive(500, 1000);
+    turn(45);
+    drive(2000, -1300);
+    square_up_black_line(600);
+    drive(500, 1000);
+    turn(90);
+    square_up_black_line(1000);
+    pause();
+    move_servo_up_or_open_claw(0, 700, 900, 30);
+    drive(2000, -1000);
+    turn(90);
+    drive(1500, -1000);
+    drive(600, 1000);
     move_servo_up_or_open_claw(1, 879, 1600, 50);
 
     return 0;
