@@ -252,10 +252,10 @@ int main() {
         
     } else if (firstcup == 3){
         move_servo_up_or_open_claw(1, 1000, 1600, 30);
-        turn(4.5);
+        turn(6.5);
         drive_until_cup();
         move_servo_down_or_close_claw(1, 1600, 1000, 50);
-        drive(1100, 1000);
+        drive(1700, 1000);
         move_servo_down_or_close_claw(0, 900, 700, 30);
     }else{
         move_servo_up_or_open_claw(1, 1000, 1600, 30);
@@ -269,7 +269,6 @@ int main() {
         
     }
     pause();
-    move_servo_up_or_open_claw(3, 1000, 1900, 30);
     drive(1000,-1300);
     turn(45);
     drive(500, 1000);
@@ -277,15 +276,40 @@ int main() {
     drive(2000, -1300);
     square_up_black_line(600);
     drive(500, 1000);
-    turn(90);
-    square_up_black_line(1000);
+    turn(45);
+    drive(500, 1000);
+    turn(45);
     pause();
-    move_servo_up_or_open_claw(0, 700, 900, 30);
-    drive(2000, -1000);
+    square_up_black_line(600);
+    pause();
+    move_servo_up_or_open_claw(0, 700, 1050, 30);
+    move_servo_up_or_open_claw(1, 1000, 1750, 30);
+    drive(500, -1000);
+    turn(-45);
+    drive(1000, 1000);
+    turn(-45);
+    drive(2750, 1000);
     turn(90);
     drive(1500, -1000);
-    drive(600, 1000);
-    move_servo_up_or_open_claw(1, 879, 1600, 50);
-
+    drive(300, 1000);
+    move_servo_up_or_open_claw(2, 430, 1300, 30);
+    move_servo_down_or_close_claw(3, 1900, 750, 30);
+    move_servo_down_or_close_claw(2, 1300, 430, 30);
+    move_servo_up_or_open_claw(3, 750, 1900, 30);
+    turn(-90);
+    drive(3600, -1300);
+	turn(-45);
+    drive(550, 1000);
+    turn(-47);
+    drive(170, 150);
+    move_servo_down_or_close_claw(3, 1900, 1600, 30);
+    move_servo_up_or_open_claw(2, 430, 1300, 30);
+    move_servo_up_or_open_claw(3, 1600, 1900, 30);
+    drive(500, 1000);
+    turn(45);
+    drive(1300, 1000);
+    turn(-47);
+    drive_until_cup();
+    
     return 0;
 }
