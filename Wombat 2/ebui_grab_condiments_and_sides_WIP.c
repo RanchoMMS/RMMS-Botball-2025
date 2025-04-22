@@ -207,16 +207,15 @@ void servo(int port, int end_pos, int step){
     mav(1,0);
     mav(2,0);
     mav(3,0);
-    msleep(20);
+    msleep(200);
 }
 
 
 //competition functions
 void potato_grab(){
     //    mecanum_drive_left(1,588,);
-    servo(0,531,10);
-    servo(0,870,10);
-    servo(1,1215,10);
+    servo(0,800,10);
+    servo(1,1043,10);
     servo(0,589,10);
     // msleep(2000);
 
@@ -253,14 +252,15 @@ void potato_grab_drop(){
     mecanum_drive_right(200,1000);
     //drops of the potato
     stop(1000);
-    mecanum_drive(700,1200);
+    mecanum_drive(600,1200);
     stop(1000);
     servo(0,917,10);
-    servo(1,399,5);
+    servo(1,486,15);
 }
 void tomato_grab(){
     //after it drops the potato, it line follows to aline itself with the tomato
     servo(0,875,10);
+    servo(1,537,10);
     stop(1);
     left(1980,800);
     stop(1);
@@ -270,26 +270,22 @@ void tomato_grab(){
     stop(1);
     left(1980,800);
     stop(1);
-    mecanum_drive(1200,-1200);
+    mecanum_drive(1000,1200);
+    stop(1);
+    mecanum_drive_left(750,1200);
+    stop(9);
 
+    //trys to grab the tomato
     stop(1);
-    square_up(800);
-    
-    //goes forward to grab the tomato
-    stop(1);
-    mecanum_drive(980,1200);
-    stop(1);
-    mecanum_drive_right(200,1200);
-    servo(0,875,10);
-    stop(1);
-	//trys to grab the tomato
-    stop(1);
-    servo(0,1000,10);
-    servo(1,1069,10);
-    servo(0,963,10);
-    servo(0,554,10);
+    servo(0,1085,7);
+    servo(1,925,5);
+    servo(0,918,10);
+    mecanum_drive(1500,-1200);
+
+    //  servo(0,554,10);
     left(1980,800);
-    
+    servo(0,824,10);
+    //    
     //line follows to drop it off at the second tray
     stop(1);
     lineFollow(2300,1200);
@@ -298,10 +294,10 @@ void tomato_grab(){
     left(1980,800);
 
     stop(1);
-    mecanum_drive_right(50,1200);
+    mecanum_drive_left(50,1200);
     stop(1);
 
-	//drops the tomato to the tray
+    //drops the tomato to the tray
     mecanum_drive(700,800);
     stop(1);
     servo(0,896,10);
@@ -309,19 +305,19 @@ void tomato_grab(){
 
 }
 void sides_grab(){
-    servo(0,820,10);
-    servo(1,748,10);
+    servo(0,598,10);
+    servo(1,520,10);
     stop(1);
     lineFollow(1500,1200);
     stop(1);
-    mecanum_drive(1200,-1200);
+    mecanum_drive(1000,-1200);
     stop(1);
     mecanum_drive_left(100,1200);
     stop(1);
     potato_grab_drop();
     stop(1);
 
-	tomato_grab();
+    tomato_grab();
     //alines with the tomato
 
 
@@ -329,26 +325,85 @@ void sides_grab(){
 
 
 }
-void condiments_grab(){
-servo(1,934,5);
-    servo(0,1093,8);
-    lineFollow(4000,1200);
+void condiments_grab_3(){
+    servo(1,630,10);
+    servo(0,1130,10);
+    servo(1,880,5);
+    mecanum_drive_right(100,1200);
+    mecanum_drive(900,1200);
+    lineFollow(3800,800);
     stop(1);
-    servo(1,1006,7);
-    servo(0,821,10);
-    disable_servos();
-    }
+    servo(1,1140,10);
+    servo(0,530,10);
+}
 
+void first_pom_set(){
+    condiments_grab_3();
+    mecanum_drive(500,1000);
+    right(1980,800);
+    
+    mecanum_drive_left(500,800);
+    mecanum_drive(200,800);
+    while(digital(0)==0){
+        mav(RIGHT,1000);
+        mav(LEFT,1000);
+        mav(back_LEFT,1000);
+        mav(back_RIGHT,1000);
+        msleep(10);    
+    }
+    mecanum_drive(200,800);
+    mecanum_drive(50,-800);
+    mecanum_drive_right(150,800);
+    servo(1,700,15);
+    mecanum_drive_left(100,1200);
+    mecanum_drive_right(100,1200);
+
+
+}
+void second_pom_set(){
+    left(2080,800);
+    mecanum_drive(200,-1000);
+    mecanum_drive_left(200,1000);
+    //condiments_grab_3();
+    servo(1,630,10);
+    servo(0,1130,10);
+    servo(1,920,10);
+    msleep(20);
+    mecanum_drive_left(200,1200);
+    mecanum_drive(2000,750);
+    mecanum_drive_right(200,1200);
+    lineFollow(2000,800);
+    stop(1);
+    servo(1,1140,10);
+    servo(0,800,10);
+    right(1980,800);
+    mecanum_drive_right(2100,1200);
+	
+    while(digital(0)==0){
+        mav(RIGHT,1000);
+        mav(LEFT,1000);
+        mav(back_LEFT,1000);
+        mav(back_RIGHT,1000);
+        msleep(10);    
+    }
+    mecanum_drive(200,1200);
+    mecanum_drive(50,-1200);
+    mecanum_drive_right(200,1200);
+    servo(1,702,15);
+
+      mecanum_drive_left(100,1200);
+    mecanum_drive_right(100,1200);
+    
+}
 
 int main(){
 
-/**/
-  //  sides_grab();
-condiments_grab();
-    lineFollow(500,1200);
-    right(2100,800);
-    
-    mecanum_drive_left(500,1200);
+    /**/
+    //sides_grab();
+    first_pom_set();
+    second_pom_set();
+    //mecanum_drive(1900,800);
+
     return 0;
 }
 
