@@ -288,7 +288,7 @@ int main() {
     turn(-45);
     drive(1000, 1000);
     turn(-45);
-    drive(2750, 1000);
+    drive(2800, 1000);
     turn(90);
     drive(1500, -1000);
     drive(300, 1000);
@@ -305,11 +305,37 @@ int main() {
     move_servo_down_or_close_claw(3, 1900, 1600, 30);
     move_servo_up_or_open_claw(2, 430, 1300, 30);
     move_servo_up_or_open_claw(3, 1600, 1900, 30);
-    drive(500, 1000);
+    turn(90);
+    drive(2800, 1000);
     turn(45);
+    drive(1000, 1000);
+    turn(45);
+    drive(2000, -1000);
+    move_servo_up_or_open_claw(2, 430, 1300, 30);
+    move_servo_down_or_close_claw(3, 1900, 750, 30);
+    move_servo_down_or_close_claw(2, 1300, 430, 30);
+    move_servo_up_or_open_claw(3, 750, 1900, 30);
+    turn(-90);
+    drive(3600, -1300);
+	turn(-45);
+    drive(550, 1000);
+    turn(-47);
+    drive(170, 150);
+    drive(500, 1000);
+    turn(90);
     drive(1300, 1000);
     turn(-47);
     drive_until_cup();
+    move_servo_down_or_close_claw(1, 1750, 790, 30);
+    drive(500, 1000);
+    move_servo_down_or_close_claw(0, 1000, 600, 30);
+    drive(2000, -1000);
+    move_servo_up_or_open_claw(1, 790, 1750, 30);
+    turn(-90);
+    drive(200, 500);
+    ow_turnl_90();
+    drive(100, 500);
+    move_servo_up_or_open_claw(0, 600, 1000, 30);
     
     return 0;
 }
