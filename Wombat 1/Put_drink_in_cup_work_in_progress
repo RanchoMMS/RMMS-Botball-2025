@@ -255,10 +255,10 @@ int main() {
     mav(3, 0);
     msleep(10);
     turn(-45); // Turn another 45 degrees left
-    drive(1800, 1300); // Drive forward a bit
+    drive(1900, 1300); // Drive forward a bit
     turn(45); // Get back into normal position
     square_up_black_line(600); // Square up
-    move_servo_down_or_close_claw(1, 1600, 1000, 30); //Reset claw
+    move_servo_down_or_close_claw(1, 1600, 1000, 40); //Reset arm
     
     //Deciding which direction to go depending on the cup
     int firstcup = decidecup(whatcolor);
@@ -267,23 +267,16 @@ int main() {
     printf("firstcup pos is %d and blue cup %d\n", firstcup,blue);
     
     if (firstcup == 2){
-        move_servo_up_or_open_claw(1, 1000, 1600, 30);
         turn(-2);
-        drive_until_cup();
-        move_servo_down_or_close_claw(1, 1600, 1000, 50);
-        drive(1100, 1000);
-        drive(200, 500);
+        drive(3400, 1300);
+        drive(200, 400);
         move_servo_down_or_close_claw(0, 900, 700, 50);
         pause(); // Slight pause
         drive(1000,-1300); // Drive backwards
         turn(45); // Turn 45 degrees right
     } else if (firstcup == 3){
-        move_servo_up_or_open_claw(1, 1000, 1600, 30);
         turn(6.5);
-        drive_until_cup();
-        move_servo_down_or_close_claw(1, 1600, 1000, 50);
-        drive(1700, 1000);
-        drive(200, 500);
+        drive(3600, 1300);
         move_servo_down_or_close_claw(0, 900, 700, 30);
         pause(); // Slight pause
         drive(1000,-1300); // Drive backwards
@@ -332,26 +325,46 @@ int main() {
     turn(-90); // Turn left 45 degrees
     drive(3600, -1300); // Drive backwards towards the cup
     turn(-45); // Turn 45 degrees
-    drive(550, 1300); // drives forward a bit
+    drive(350, 1300); // drives forward a bit
     turn(-47); // Turn 45 degrees again
-    drive(170, 150); // Goes forwards a bit
-    move_servo_down_or_close_claw(3, 1900, 1600, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
+    drive(360, 500); // Goes forwards a bit
+    move_servo_down_or_close_claw(3, 1900, 1500, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
     move_servo_up_or_open_claw(2, 430, 1300, 40); // Release claw to put poms in
-    move_servo_up_or_open_claw(3, 1600, 1900, 40); // Raise arm up again
+    move_servo_up_or_open_claw(3, 1500, 1900, 40); // Raise arm up again
     drive(500, 1300); // Drive forward a bit
     turn(45); // Turn 90 degrees right
     drive(1300, 1300); // Drive towards drink dispenser
-    turn(-45); // Turn 45 degrees right
-    drive_until_cup(); // Drive until detects drink dispenser
+    turn(-47); // Turn 45 degrees right
     move_servo_down_or_close_claw(1, 1750, 790, 40); // Move arm down
-    drive(500, 1300); // Drive forward a bit
+    drive(500, 1300);
     move_servo_down_or_close_claw(0, 1000, 600, 40); // Close claw and grab drink
     drive(2000, -1300); // Move back a bit
     move_servo_up_or_open_claw(1, 790, 1750, 40); // Raise arm up
     turn(-90); // Turn left 90 degrees
-    drive(200, 500); // Drive forward a bit
+    square_up_black_line(500); // Drive forward a bit and square up
+    drive(270, 1300);
     ow_turnl_90(); // Turn left using one wheel
-    drive(100, 500); // Drive forward a bit
+    drive(800, -700);
+    square_up_black_line(500);
+    drive(700, 700); // Drive forward a bit
+    move_servo_up_or_open_claw(0, 600, 1000, 40); // Open claw and release drink
+    drive(500, -1300);
+    turn(88);
+    drive(1000, -1300);
+    turn(88);
+    drive(2300, 1300);
+    move_servo_down_or_close_claw(1, 1750, 790, 30);
+    drive(400, 1300);
+    move_servo_down_or_close_claw(0, 1000, 600, 30);
+    drive(2000, -1300); // Move back a bit
+    move_servo_up_or_open_claw(1, 790, 1750, 40); // Raise arm up
+    turn(-90); // Turn left 90 degrees
+    square_up_black_line(500); // Drive forward a bit and square up
+    drive(250, 600);
+    ow_turnl_90(); // Turn left using one wheel
+    drive(800, -700);
+    square_up_black_line(500);
+    drive(700, 700); // Drive forward a bit
     move_servo_up_or_open_claw(0, 600, 1000, 40); // Open claw and release drink
     return 0;
 }
