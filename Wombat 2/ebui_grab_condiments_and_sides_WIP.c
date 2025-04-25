@@ -328,10 +328,10 @@ void sides_grab(){
 void condiments_grab_3(){
     servo(1,630,10);
     servo(0,1130,10);
-    servo(1,880,5);
-    mecanum_drive_right(100,1200);
-    mecanum_drive(900,1200);
-    lineFollow(3800,800);
+    servo(1,865,5);
+    mecanum_drive(900,1000);
+    mecanum_drive_right(500,800);
+    lineFollow(2500,800);
     stop(1);
     servo(1,1140,10);
     servo(0,530,10);
@@ -339,11 +339,14 @@ void condiments_grab_3(){
 
 void first_pom_set(){
     condiments_grab_3();
+    
+    //goes roughly towards the closests tray
     mecanum_drive(500,1000);
     right(1980,800);
     
     mecanum_drive_left(500,800);
     mecanum_drive(200,800);
+    //goes to the pipe to aline closely to the tray
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -354,6 +357,8 @@ void first_pom_set(){
     mecanum_drive(200,800);
     mecanum_drive(50,-800);
     mecanum_drive_right(150,800);
+    
+    //drops the condiments
     servo(1,700,15);
     mecanum_drive_left(100,1200);
     mecanum_drive_right(100,1200);
@@ -361,14 +366,16 @@ void first_pom_set(){
 
 }
 void second_pom_set(){
-    left(2080,800);
-    mecanum_drive(200,-1000);
-    mecanum_drive_left(200,1000);
-    //condiments_grab_3();
+    //aline's itself with the next pom set
+    left(2000,800);
+    mecanum_drive(100,-1000);
+    mecanum_drive_left(980,1000);
+    //condiments_grab_3 function but adjusticed to acount for the bump on the table
     servo(1,630,10);
     servo(0,1130,10);
     servo(1,920,10);
     msleep(20);
+    //roughly alines itself with the trays
     mecanum_drive_left(200,1200);
     mecanum_drive(2000,750);
     mecanum_drive_right(200,1200);
@@ -378,7 +385,7 @@ void second_pom_set(){
     servo(0,800,10);
     right(1980,800);
     mecanum_drive_right(2100,1200);
-	
+	//goes to the pipe to aline the tray
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -386,13 +393,15 @@ void second_pom_set(){
         mav(back_RIGHT,1000);
         msleep(10);    
     }
-    mecanum_drive(200,1200);
-    mecanum_drive(50,-1200);
-    mecanum_drive_right(200,1200);
+    
+    mecanum_drive(200,800);
+    mecanum_drive(50,-800);
+    mecanum_drive_right(200,1000);
+    //drops the condiments
     servo(1,702,15);
 
       mecanum_drive_left(100,1200);
-    mecanum_drive_right(100,1200);
+    mecanum_drive_right(200,1200);
     
 }
 
@@ -402,6 +411,7 @@ int main(){
     //sides_grab();
     first_pom_set();
     second_pom_set();
+    disable_servos();
     //mecanum_drive(1900,800);
 
     return 0;
