@@ -190,13 +190,14 @@ void servo(int port, int end_pos, int step){
     enable_servos();
     int servo_pos = get_servo_position(port);
 
-
+//if u want the value to go upwards in value 
     if(servo_pos<= end_pos){
         for (int pos = servo_pos; pos <= end_pos; pos += step) {
             set_servo_position(port, pos);
             msleep(30);
         }
     }else{
+	    //if u wantthe vlaue to go downwards in value
         for (int pos = servo_pos; pos >= end_pos; pos -= step) {
             set_servo_position(port, pos);
             msleep(30);
@@ -326,13 +327,16 @@ void sides_grab(){
 
 }
 void condiments_grab_3(){
+	//sets the servo to the ground
     servo(1,630,10);
     servo(0,1130,10);
     servo(1,865,5);
+	//moves forwarsd to grab a set of 3 poms
     mecanum_drive(900,1000);
     mecanum_drive_right(500,800);
     lineFollow(2500,800);
     stop(1);
+	//lifts up the poms
     servo(1,1140,10);
     servo(0,530,10);
 }
@@ -340,13 +344,13 @@ void condiments_grab_3(){
 void first_pom_set(){
     condiments_grab_3();
     
-    //goes roughly towards the closests tray
+    //goes roughly towards the closest tray
     mecanum_drive(500,1000);
     right(1980,800);
     
     mecanum_drive_left(500,800);
     mecanum_drive(200,800);
-    //goes to the pipe to aline closely to the tray
+    //goes to the pipe to aline itself to the pipe
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -354,6 +358,7 @@ void first_pom_set(){
         mav(back_RIGHT,1000);
         msleep(10);    
     }
+	//alines itself with the tray
     mecanum_drive(200,800);
     mecanum_drive(50,-800);
     mecanum_drive_right(150,800);
@@ -366,11 +371,11 @@ void first_pom_set(){
 
 }
 void second_pom_set(){
-    //aline's itself with the next pom set
+    //alines itself with the next pom set
     left(2000,800);
     mecanum_drive(100,-1000);
     mecanum_drive_left(980,1000);
-    //condiments_grab_3 function but adjusticed to acount for the bump on the table
+    //condiments_grab_3 function but adjusted to account for the bump on the table
     servo(1,630,10);
     servo(0,1130,10);
     servo(1,920,10);
