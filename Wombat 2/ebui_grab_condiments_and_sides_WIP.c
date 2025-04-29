@@ -190,14 +190,13 @@ void servo(int port, int end_pos, int step){
     enable_servos();
     int servo_pos = get_servo_position(port);
 
-//if u want the value to go upwards in value 
+
     if(servo_pos<= end_pos){
         for (int pos = servo_pos; pos <= end_pos; pos += step) {
             set_servo_position(port, pos);
             msleep(30);
         }
     }else{
-	    //if u wantthe vlaue to go downwards in value
         for (int pos = servo_pos; pos >= end_pos; pos -= step) {
             set_servo_position(port, pos);
             msleep(30);
@@ -215,9 +214,7 @@ void servo(int port, int end_pos, int step){
 //competition functions
 void potato_grab(){
     //    mecanum_drive_left(1,588,);
-    servo(0,800,10);
-    servo(1,1043,10);
-    servo(0,589,10);
+    
     // msleep(2000);
 
 
@@ -234,30 +231,7 @@ void stop(int time){
 }
 
 
-void potato_grab_drop(){
-    potato_grab();
-    stop(1);
-    //alines the bot to be on the black line
-    left(1980,800);
-
-
-    mecanum_drive_right(500,800);
-    stop(1000);
-    //follows the line until it's at the tray
-    lineFollow(5850,1000);
-    stop(1);
-    square_up(800);
-    stop(1000);
-    left(1980,800);
-    stop(1);
-    mecanum_drive_right(200,1000);
-    //drops of the potato
-    stop(1000);
-    mecanum_drive(600,1200);
-    stop(1000);
-    servo(0,917,10);
-    servo(1,486,15);
-}
+/*
 void tomato_grab(){
     //after it drops the potato, it line follows to aline itself with the tomato
     servo(0,875,10);
@@ -325,32 +299,30 @@ void sides_grab(){
 
 
 
-}
+}*/
 void condiments_grab_3(){
-	//sets the servo to the ground
     servo(1,630,10);
     servo(0,1130,10);
     servo(1,865,5);
-	//moves forwarsd to grab a set of 3 poms
     mecanum_drive(900,1000);
-    mecanum_drive_right(500,800);
-    lineFollow(2500,800);
+    mecanum_drive_right(200,800);
+    lineFollow(2200,800);
+    mecanum_drive(100,-800);
     stop(1);
-	//lifts up the poms
     servo(1,1140,10);
     servo(0,530,10);
 }
 
 void first_pom_set(){
     condiments_grab_3();
-    
-    //goes roughly towards the closest tray
+
+    //goes roughly towards the closests tray
     mecanum_drive(500,1000);
     right(1980,800);
-    
+
     mecanum_drive_left(500,800);
     mecanum_drive(200,800);
-    //goes to the pipe to aline itself to the pipe
+    //goes to the pipe to aline closely to the tray
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -358,11 +330,10 @@ void first_pom_set(){
         mav(back_RIGHT,1000);
         msleep(10);    
     }
-	//alines itself with the tray
     mecanum_drive(200,800);
     mecanum_drive(50,-800);
     mecanum_drive_right(150,800);
-    
+
     //drops the condiments
     servo(1,700,15);
     mecanum_drive_left(100,1200);
@@ -371,11 +342,11 @@ void first_pom_set(){
 
 }
 void second_pom_set(){
-    //alines itself with the next pom set
-    left(2000,800);
+    //aline's itself with the next pom set
+    left(1980,800);
     mecanum_drive(100,-1000);
     mecanum_drive_left(980,1000);
-    //condiments_grab_3 function but adjusted to account for the bump on the table
+    //condiments_grab_3 function but adjusticed to acount for the bump on the table
     servo(1,630,10);
     servo(0,1130,10);
     servo(1,920,10);
@@ -383,14 +354,14 @@ void second_pom_set(){
     //roughly alines itself with the trays
     mecanum_drive_left(200,1200);
     mecanum_drive(2000,750);
-    mecanum_drive_right(200,1200);
+    mecanum_drive_right(100,1200);
     lineFollow(2000,800);
     stop(1);
     servo(1,1140,10);
     servo(0,800,10);
     right(1980,800);
-    mecanum_drive_right(2100,1200);
-	//goes to the pipe to aline the tray
+    mecanum_drive_right(500,1200);
+    //goes to the pipe to aline the tray
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -398,26 +369,80 @@ void second_pom_set(){
         mav(back_RIGHT,1000);
         msleep(10);    
     }
-    
+
     mecanum_drive(200,800);
     mecanum_drive(50,-800);
-    mecanum_drive_right(200,1000);
+    mecanum_drive_left(50,1000);
     //drops the condiments
-    servo(1,702,15);
+    servo(1,700,15);
 
-      mecanum_drive_left(100,1200);
+    mecanum_drive_left(100,1200);
     mecanum_drive_right(200,1200);
-    
 }
+void potato(){
+        servo(1,700,15);
 
+    	servo(0,385,10);
+
+    mecanum_drive(500,-1200);
+    mecanum_drive_left(500,1200);
+    left(1980,800);
+    mecanum_drive_left(500,1200);
+    lineFollow(2000,1200);
+    left(1980,800);
+     while(digital(0)==0){
+        mav(RIGHT,1000);
+        mav(LEFT,1000);
+        mav(back_LEFT,1000);
+        mav(back_RIGHT,1000);
+        msleep(10);    
+    }
+    mecanum_drive(200,800);
+    mecanum_drive(50,-800);
+    
+    
+    servo(0,800,10);
+    servo(1,1043,10);
+    servo(0,589,10);
+    stop(1);
+    //alines the bot to be on the black line
+    left(1980,800);
+
+
+    mecanum_drive_right(500,800);
+    stop(1000);
+    //follows the line until it's at the tray
+    lineFollow(5850,1000);
+    stop(1);
+    square_up(800);
+    stop(1000);
+    left(1980,800);
+        stop(1);
+    mecanum_drive_right(200,1000);
+    //drops of the potato
+    stop(1000);
+    mecanum_drive(600,1200);
+    stop(1000);
+    servo(0,917,10);
+    servo(1,486,15);
+}
 int main(){
+   // wait_for_light(5);
+    servo(0,1130,10);
 
-    /**/
-    //sides_grab();
+    /*
+    mecanum_drive(2000,-1200);
+    mecanum_drive_left(500,1200);
+   	left(1980,900);
+    mecanum_drive(700,-1200);
+    servo(0,815,20);
+    mecanum_drive_right(500,1200);
+    mecanum_drive(2600,1200);
+    
     first_pom_set();
-    second_pom_set();
+    second_pom_set();*/
+    potato();
     disable_servos();
-    //mecanum_drive(1900,800);
 
     return 0;
 }
