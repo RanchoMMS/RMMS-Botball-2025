@@ -277,33 +277,14 @@ void tomato_grab(){
     stop(1);
     servo(0,896,10);
     servo(1,689,10);   
-
-}
-void sides_grab(){
-    servo(0,598,10);
-    servo(1,520,10);
-    stop(1);
-    lineFollow(1500,1200);
-    stop(1);
-    mecanum_drive(1000,-1200);
-    stop(1);
-    mecanum_drive_left(100,1200);
-    stop(1);
-    potato_grab_drop();
-    stop(1);
-
-    tomato_grab();
-    //alines with the tomato
+    }
+*/
 
 
-
-
-
-}*/
 void condiments_grab_3(){
-    servo(1,630,10);
-    servo(0,1130,10);
-    servo(1,865,5);
+    servo(1,630,15);
+    servo(0,1130,15);
+    servo(1,865,10);
     mecanum_drive(900,1000);
     mecanum_drive_right(200,800);
     lineFollow(2200,800);
@@ -331,7 +312,7 @@ void first_pom_set(){
         msleep(10);    
     }
     mecanum_drive(200,800);
-    mecanum_drive(50,-800);
+    mecanum_drive(100,-800);
     mecanum_drive_right(150,800);
 
     //drops the condiments
@@ -371,7 +352,7 @@ void second_pom_set(){
     }
 
     mecanum_drive(200,800);
-    mecanum_drive(50,-800);
+    mecanum_drive(100,-800);
     mecanum_drive_left(50,1000);
     //drops the condiments
     servo(1,700,15);
@@ -388,17 +369,13 @@ void potato(){
     mecanum_drive_left(500,1200);
     left(1980,800);
     mecanum_drive_left(500,1200);
-    lineFollow(2000,1200);
-    left(1980,800);
-     while(digital(0)==0){
-        mav(RIGHT,1000);
-        mav(LEFT,1000);
-        mav(back_LEFT,1000);
-        mav(back_RIGHT,1000);
-        msleep(10);    
-    }
-    mecanum_drive(200,800);
-    mecanum_drive(50,-800);
+    lineFollow(4500,1200);
+    stop(1);
+   	left(1980,800);
+    mecanum_drive_right(100,1200);
+    
+    
+    mecanum_drive(400,1000);
     
     
     servo(0,800,10);
@@ -409,38 +386,47 @@ void potato(){
     left(1980,800);
 
 
-    mecanum_drive_right(500,800);
     stop(1000);
     //follows the line until it's at the tray
-    lineFollow(5850,1000);
+    lineFollow(4500,1000);
     stop(1);
-    square_up(800);
-    stop(1000);
     left(1980,800);
         stop(1);
-    mecanum_drive_right(200,1000);
+    mecanum_drive_right(300,1000);
+    while(digital(0)==0){
+        mav(RIGHT,1000);
+        mav(LEFT,1000);
+        mav(back_LEFT,1000);
+        mav(back_RIGHT,1000);
+        msleep(10);    
+    }
+	
+    mecanum_drive(200,-1200);
     //drops of the potato
-    stop(1000);
-    mecanum_drive(600,1200);
     stop(1000);
     servo(0,917,10);
     servo(1,486,15);
 }
 int main(){
-   // wait_for_light(5);
+    wait_for_light(5);
+       // lineFollow(20000,1500);
+	msleep(1000);
     servo(0,1130,10);
-
-    /*
-    mecanum_drive(2000,-1200);
-    mecanum_drive_left(500,1200);
+    servo(1,1080,10);
+//gets out of the start box
+    
+    mecanum_drive(2000,-1300);
+    mecanum_drive_left(500,1300);
+    //becomes perpendicular to the pipe (squaring up)
    	left(1980,900);
-    mecanum_drive(700,-1200);
+    mecanum_drive(700,-1300);
     servo(0,815,20);
-    mecanum_drive_right(500,1200);
-    mecanum_drive(2600,1200);
+    //gets to first condiment
+    mecanum_drive_right(500,1300);
+    mecanum_drive(2600,1300);
     
     first_pom_set();
-    second_pom_set();*/
+    second_pom_set();
     potato();
     disable_servos();
 
