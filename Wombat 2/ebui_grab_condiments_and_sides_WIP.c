@@ -361,7 +361,7 @@ void second_pom_set(){
     mecanum_drive_right(200,1200);
 }
 void potato(){
-        servo(1,700,15);
+        servo(1,475,15);
 
     	servo(0,385,10);
 
@@ -372,14 +372,14 @@ void potato(){
     lineFollow(4500,1200);
     stop(1);
    	left(1980,800);
-    mecanum_drive_right(100,1200);
+    mecanum_drive_right(50,1200);
     
     
     mecanum_drive(400,1000);
     
     
     servo(0,800,10);
-    servo(1,1043,10);
+    servo(1,1043,20);
     servo(0,589,10);
     stop(1);
     //alines the bot to be on the black line
@@ -388,11 +388,11 @@ void potato(){
 
     stop(1000);
     //follows the line until it's at the tray
-    lineFollow(4500,1000);
+    lineFollow(2300,1300);
     stop(1);
-    left(1980,800);
+    left(2010,800);
         stop(1);
-    mecanum_drive_right(300,1000);
+    mecanum_drive_left(50,1000);
     while(digital(0)==0){
         mav(RIGHT,1000);
         mav(LEFT,1000);
@@ -400,17 +400,31 @@ void potato(){
         mav(back_RIGHT,1000);
         msleep(10);    
     }
-	
+	    mecanum_drive(100,1200);
+
     mecanum_drive(200,-1200);
+    mecanum_drive_left(50,1200);
     //drops of the potato
     stop(1000);
-    servo(0,917,10);
+    servo(0,820,10);
     servo(1,486,15);
 }
+
+void poms(){
+	mecanum_drive(1000,-1200);
+    right(1980,800);
+   // mecanum_drive_left(200,1200);
+    lineFollow(2000,1200);
+    mecanum_drive_right(500,1200);
+        servo(0,1130,15);
+    servo(1,1043,10);
+    servo(0,820,10);
+
+}
 int main(){
-    wait_for_light(5);
+   // wait_for_light(5);
        // lineFollow(20000,1500);
-	msleep(1000);
+	/*msleep(1000);
     servo(0,1130,10);
     servo(1,1080,10);
 //gets out of the start box
@@ -426,8 +440,9 @@ int main(){
     mecanum_drive(2600,1300);
     
     first_pom_set();
-    second_pom_set();
-    potato();
+    second_pom_set();*/
+   // potato();
+    poms();
     disable_servos();
 
     return 0;
