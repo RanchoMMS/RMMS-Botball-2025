@@ -69,7 +69,7 @@ void drive(int distance, int speed) {
 void move_servo_up_or_open_claw(int port, int start_pos, int end_pos, int step) {
     for (int pos = start_pos; pos <= end_pos; pos += step) {
         Set_servo_position(port, pos);
-        msleep(100);
+        msleep(80);
     }
 }
 
@@ -77,7 +77,7 @@ void move_servo_up_or_open_claw(int port, int start_pos, int end_pos, int step) 
 void move_servo_down_or_close_claw(int port, int start_pos, int end_pos, int step) {
     for (int pos = start_pos; pos >= end_pos; pos -= step) {
         Set_servo_position(port, pos);
-        msleep(100);
+        msleep(80);
     }
 }
 
@@ -221,16 +221,16 @@ void drive_until_cup() {
     mav(3, 0);
 }
 
-int whatcolor = 0; // 0 for red, 1 for green
+int whatcolor = 1; // 0 for red, 1 for green
 int main() {
-    wait_for_light(1);
-    shut_down_in(5);
+    //wait_for_light(1);
+    shut_down_in(123);
     camera_open();
     enable_servos();
    
     move_servo_down_or_close_claw(0, 1300, 900, 50); // Reset claw
-    drive(2000, -1300); // Drive back to square up
-    drive(1000, 1300); // Drive forward a bit
+    drive(2500, -1500); // Drive back to square up
+    drive(1000, 1500); // Drive forward a bit
     pause();
     pause();
     pause();
@@ -260,7 +260,7 @@ int main() {
     mav(3, 0);
     msleep(10);
     turn(-60); // Turn another 60 degrees left
-    drive(1900, 1300); // Drive forward a bit
+    drive(2000, 1450); // Drive forward a bit
     turn(45);
     square_up_black_line(600); // Square up
     move_servo_down_or_close_claw(1, 1600, 1000, 50); //Reset arm
@@ -281,30 +281,24 @@ int main() {
         turn(45); // Turn 45 degrees right
     } else if (firstcup == 3){
         turn(6.5);
-        drive(3800, 1300);
+        drive(3800, 1450);
         move_servo_down_or_close_claw(0, 900, 600, 30);
         pause(); // Slight pause
-        drive(1000,-1300); // Drive backwards
+        drive(1000,-1500); // Drive backwards
         turn(38.5); // Turn 45 degrees right
     }else{
-        move_servo_up_or_open_claw(1, 1000, 1600, 30);
-        turn(45);
-        drive(2000,1300);
-        turn(-87);
-        drive_until_cup();
-        move_servo_down_or_close_claw(1, 1600, 1000, 50);
-        drive(1100, 1000);
-        drive(200, 500);
-        move_servo_down_or_close_claw(0, 900, 700, 30);
+        turn(-2);
+        drive(3400, 1500);
+        drive(200, 400);
+        move_servo_down_or_close_claw(0, 900, 600, 50);
         pause(); // Slight pause
-    	drive(1000,-1300); // Drive backwards
-        turn(42);
+        drive(1000,-1500); // Drive backwards
         turn(45); // Turn 45 degrees right
     }
     
     drive(500, 1300); // Drive forward a bit
     turn(45); // Turn another 45 degrees right
-    drive(2000, -1300); // Square up against PVC pipe
+    drive(2000, -1450); // Square up against PVC pipe
     square_up_black_line(600); // Squares up against black line
     drive(500, 1300); // Drive forward a bit
     turn(45); // Turn 45 degrees right
@@ -334,12 +328,12 @@ int main() {
     pause();
     pause();
     turn(-90); // Turn left 45 degrees
-    drive(2300, -1300); // Drive backwards towards the cup
-    turn(-98);
+    drive(2300, -1450); // Drive backwards towards the cup
+    turn(-96);
     move_servo_down_or_close_claw(1, 1750, 790, 40);
+    move_servo_down_or_close_claw(0, 1050, 850, 40);
     drive(2550, 1300);
-    
-    move_servo_down_or_close_claw(0, 1050, 330, 40);
+    move_servo_down_or_close_claw(0, 850, 330, 40);
     drive(2550, -1300);
     move_servo_up_or_open_claw(1, 790, 1750, 40);
     turn(90);
@@ -356,7 +350,7 @@ int main() {
     drive(500, 1300); // Drive forward a bit
     turn(180);
     square_up_black_line(600);
-    drive(850, 1300);
+    drive(790, 1300);
     move_servo_down_or_close_claw(1, 1750, 1600, 40);
     move_servo_up_or_open_claw(0, 450, 1000, 40);
     move_servo_up_or_open_claw(1, 1600, 1750, 40);
