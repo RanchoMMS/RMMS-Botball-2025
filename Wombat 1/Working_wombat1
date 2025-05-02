@@ -225,6 +225,22 @@ int whatcolor = 1; // 0 for red, 1 for green
 
 //  start pos for port 3 1013, move later to 1375
 int main() {
+    while (digital(0) == 0 && digital(1)==0){
+        msleep(1);
+    }
+    if (digital(0) == 1){
+        whatcolor = 1;
+        printf("GO FOR GREEN");
+    }else if (digital(1) ==1){
+        whatcolor = 0;
+        printf("GO FOR RED");
+    }
+    pause();
+    pause();
+    pause();
+    pause();
+    pause();
+    pause();
 	set_servo_position(3,1013);
     wait_for_light(1);
     shut_down_in(119);
@@ -262,7 +278,7 @@ int main() {
     mav(RIGHT,1300);
     msleep(2000);
   
-	turn(-30);
+	turn(-15);
 
 
 
@@ -285,18 +301,18 @@ int main() {
         turn(45); // Turn 45 degrees right
     } else if (firstcup == 3){
         turn(6.5);
-        drive(3800, 1450);
+        drive(3800, 1300);
         move_servo_down_or_close_claw(0, 900, 600, 30);
         pause(); // Slight pause
-        drive(1000,-1500); // Drive backwards
+        drive(1000,-1300); // Drive backwards
         turn(38.5); // Turn 45 degrees right
     }else{
         turn(-2);
-        drive(3400, 1500);
+        drive(3400, 1300);
         drive(200, 400);
         move_servo_down_or_close_claw(0, 900, 600, 50);
         pause(); // Slight pause
-        drive(1000,-1500); // Drive backwards
+        drive(1000,-1300); // Drive backwards
         turn(45); // Turn 45 degrees right
     }
     
@@ -322,8 +338,10 @@ int main() {
     drive(1500, -1000); // Squares up against pvc pipe in front of ice
     drive(300, 1000); // Moves forward a bit
     turn(2);
+    set_servo_position(2,1270);
+    msleep(500);
     move_servo_down_or_close_claw(3, 1300, 50, 40); // Turn arm down
-    move_servo_down_or_close_claw(2, 1300, 430, 40); // Close claw and grab ice
+    move_servo_down_or_close_claw(2, 1270, 430, 40); // Close claw and grab ice
     pause();
     move_servo_up_or_open_claw(3, 50, 1300, 20); // Turn arm up
     pause();
@@ -331,11 +349,11 @@ int main() {
     pause();
     pause();
     turn(-90); // Turn left 45 degrees
-    drive(2300, -1450); // Drive backwards towards the cup
+    drive(2300, -1300); // Drive backwards towards the cup
     turn(-96);
     move_servo_down_or_close_claw(1, 1750, 790, 40);
     move_servo_down_or_close_claw(0, 1050, 850, 40);
-    drive(2550, 1300);
+    drive(2850, 1300);
     move_servo_down_or_close_claw(0, 850, 330, 40);
     drive(2550, -1300);
     move_servo_up_or_open_claw(1, 790, 1750, 40);
@@ -344,7 +362,6 @@ int main() {
     turn(-45); // Turn 45 degrees
     drive(450, 1300); // drives forward a bit
     turn(-47); // Turn 45 degrees again
-    drive(360, 500); // Goes forwards a bit
    // move_servo_down_or_close_claw(3, 1900, 1500, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
     turn(-3);
     drive(100, -1300);
@@ -358,8 +375,8 @@ int main() {
     move_servo_up_or_open_claw(0, 450, 1300, 40);
     move_servo_up_or_open_claw(1, 1650, 1750, 40);
     drive(1100, -1300);
-    square_up_black_line(600);
     move_servo_down_or_close_claw(1, 1750, 1000, 40);
+    square_up_black_line(600);
     move_servo_down_or_close_claw(0, 1300, 600, 40);
     turn(-45);
     /*drive(200,1300);
