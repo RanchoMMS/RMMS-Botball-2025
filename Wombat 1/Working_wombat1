@@ -278,7 +278,7 @@ int main() {
     mav(RIGHT,1300);
     msleep(2000);
   
-	turn(-15);
+	turn(-20);
 
 
 
@@ -351,12 +351,12 @@ int main() {
     turn(-90); // Turn left 45 degrees
     drive(2300, -1300); // Drive backwards towards the cup
     turn(-96);
-    move_servo_down_or_close_claw(1, 1750, 790, 40);
+    move_servo_down_or_close_claw(1, 1750, 820, 40);
     move_servo_down_or_close_claw(0, 1050, 850, 40);
     drive(2850, 1300);
     move_servo_down_or_close_claw(0, 850, 330, 40);
     drive(2550, -1300);
-    move_servo_up_or_open_claw(1, 790, 1750, 40);
+    move_servo_up_or_open_claw(1, 850, 1750, 40);
     turn(90);
     drive(1300, -1300);
     turn(-45); // Turn 45 degrees
