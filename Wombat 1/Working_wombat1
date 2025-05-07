@@ -144,9 +144,9 @@ int decidecup(int look){
             return 1;
         }
         int x = get_object_center_x(0,0);
-        if (x >= 400){
+        if (x >= 370){
             return 3;
-        }else if ( x <= 400 && x >= 200){
+        }else if ( x <= 370 && x >= 200){
             return 2;
         }else{
             return 1;
@@ -160,9 +160,9 @@ int decidecup(int look){
         }
         int x = get_object_center_x(0,0);
 
-        if (x >= 400){
+        if (x >= 370){
             return 3;
-        }else if ( x <= 400 && x >= 200){
+        }else if ( x <= 370 && x >= 200){
             return 2;
         }else{
             return 1;
@@ -295,22 +295,24 @@ int main() {
         turn(-2);
         drive(3400, 1300);
         drive(200, 400);
-        move_servo_down_or_close_claw(0, 900, 600, 50);
+        move_servo_down_or_close_claw(0, 1000, 600, 50);
         pause(); // Slight pause
         drive(1000,-1300); // Drive backwards
+        move_servo_up_or_open_claw(1, 1000, 1100, 40);
         turn(45); // Turn 45 degrees right
     } else if (firstcup == 3){
         turn(6.5);
         drive(3800, 1300);
-        move_servo_down_or_close_claw(0, 900, 600, 30);
+        move_servo_down_or_close_claw(0, 1000, 600, 30);
         pause(); // Slight pause
         drive(1000,-1300); // Drive backwards
+        move_servo_up_or_open_claw(1, 1000, 1100, 40);
         turn(38.5); // Turn 45 degrees right
     }else{
         turn(-2);
         drive(3400, 1300);
         drive(200, 400);
-        move_servo_down_or_close_claw(0, 900, 600, 50);
+        move_servo_down_or_close_claw(0, 1000, 600, 50);
         pause(); // Slight pause
         drive(1000,-1300); // Drive backwards
         turn(45); // Turn 45 degrees right
@@ -327,6 +329,7 @@ int main() {
     pause(); // Slight pause
     square_up_black_line(600); // Squares up against black line
     pause(); // Slight pause
+    move_servo_down_or_close_claw(1, 1100, 1000, 50);
     move_servo_up_or_open_claw(0, 700, 1050, 40); // Open claw to release cup
     move_servo_up_or_open_claw(1, 1000, 1750, 40); // Raise arm up
     drive(500, -1000); // Drive backwards
@@ -354,17 +357,17 @@ int main() {
     move_servo_down_or_close_claw(1, 1750, 820, 40);
     move_servo_down_or_close_claw(0, 1050, 850, 40);
     drive(2850, 1300);
-    move_servo_down_or_close_claw(0, 850, 330, 40);
+    move_servo_down_or_close_claw(0, 820, 400, 40);
     drive(2550, -1300);
-    move_servo_up_or_open_claw(1, 850, 1750, 40);
+    move_servo_up_or_open_claw(1, 820, 1750, 40);
     turn(90);
     drive(1300, -1300);
     turn(-45); // Turn 45 degrees
-    drive(450, 1300); // drives forward a bit
+    drive(300, 1300); // drives forward a bit
     turn(-47); // Turn 45 degrees again
    // move_servo_down_or_close_claw(3, 1900, 1500, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
-    turn(-3);
-    drive(100, -1300);
+    turn(-6);
+    drive(100, 1300);
     move_servo_up_or_open_claw(2, 430, 1750, 40); // Release claw to put poms in
    // move_servo_up_or_open_claw(3, 1500, 1900, 40); // Raise arm up again
     drive(500, 1300); // Drive forward a bit
