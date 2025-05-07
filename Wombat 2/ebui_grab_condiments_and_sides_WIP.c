@@ -287,11 +287,11 @@ void condiments_grab_3(){
     servo(1,865,10);
     mecanum_drive(900,1000);
     mecanum_drive_right(200,800);
-    lineFollow(2200,800);
+    lineFollow(2150,800);
     mecanum_drive(100,-800);
     stop(1);
     servo(1,1140,10);
-    servo(0,1670,10);
+    servo(0,1780,10);
 }
 
 void first_pom_set(){
@@ -340,7 +340,7 @@ void second_pom_set(){
     stop(1);
     msleep(200);
     servo(1,1140,10);
-    servo(0,1635,10);
+    servo(0,1780,10);
     right(1980,800);
     mecanum_drive_right(500,1200);
     //goes to the pipe to aline the tray
@@ -376,10 +376,10 @@ void potato(){
    	left(2000,800);
      mecanum_drive(2250,-1200);
     mecanum_drive_right(400,1200);
-    lineFollow(2500,1200);
+    lineFollow(2600,1200);
     mecanum_drive_right(50,1200);
 
-    servo(0,1775,10);
+    servo(0,1790,10);
     servo(1,1043,20);
     servo(0,1485,10);
     stop(1);
@@ -457,7 +457,7 @@ int main(){
 
     servo(0,1650,20);
     //gets to first condiment
-    mecanum_drive(2600,1300);
+    mecanum_drive(2700,1300);
     
     first_pom_set();
     second_pom_set();
