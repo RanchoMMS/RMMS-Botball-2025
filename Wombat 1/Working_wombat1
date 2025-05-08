@@ -368,7 +368,7 @@ int main() {
     turn(-47); // Turn 45 degrees again
    // move_servo_down_or_close_claw(3, 1900, 1500, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
     turn(-6);
-    drive(300, 1300);
+    drive(150, 1300);
     move_servo_up_or_open_claw(2, 430, 1750, 40); // Release claw to put poms in
    // move_servo_up_or_open_claw(3, 1500, 1900, 40); // Raise arm up again
     drive(500, 1300); // Drive forward a bit
@@ -381,7 +381,7 @@ int main() {
     drive(1100, -1300);
     move_servo_down_or_close_claw(1, 1750, 1000, 50);
     square_up_black_line(600);
-    drive(250, 1450);
+    drive(190, 1450);
     move_servo_down_or_close_claw(0, 1300, 600, 50);
     turn(-45);
     /*drive(200,1300);
