@@ -241,7 +241,7 @@ int main() {
     pause();
     pause();
     pause();
-	set_servo_position(3,1013);
+	set_servo_position(3,990);
     wait_for_light(1);
     shut_down_in(119);
  
@@ -355,8 +355,8 @@ int main() {
     turn(-96);
     drive(2100, -1300);
     square_up_black_line(600);
-    move_servo_down_or_close_claw(1, 1750, 820, 50);
-    move_servo_down_or_close_claw(0, 1050, 850, 50);
+    move_servo_down_or_close_claw(1, 1750, 700, 50);
+    move_servo_down_or_close_claw(0, 1050, 950, 50);
     drive(4250, 1300);
     move_servo_down_or_close_claw(0, 820, 400, 50);
     drive(2550, -1300);
