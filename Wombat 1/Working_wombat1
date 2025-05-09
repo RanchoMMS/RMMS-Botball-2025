@@ -144,9 +144,9 @@ int decidecup(int look){
             return 1;
         }
         int x = get_object_center_x(0,0);
-        if (x >= 370){
+        if (x >= 350){
             return 3;
-        }else if ( x <= 370 && x >= 200){
+        }else if ( x <= 350 && x >= 200){
             return 2;
         }else{
             return 1;
@@ -160,9 +160,9 @@ int decidecup(int look){
         }
         int x = get_object_center_x(0,0);
 
-        if (x >= 370){
+        if (x >= 350){
             return 3;
-        }else if ( x <= 370 && x >= 200){
+        }else if ( x <= 350 && x >= 200){
             return 2;
         }else{
             return 1;
@@ -381,7 +381,7 @@ int main() {
     drive(1100, -1300);
     move_servo_down_or_close_claw(1, 1750, 1000, 50);
     square_up_black_line(600);
-    drive(190, 1450);
+    drive(70, 500);
     move_servo_down_or_close_claw(0, 1300, 600, 50);
     turn(-45);
     /*drive(200,1300);
