@@ -351,7 +351,7 @@ int main() {
     pause();
     pause();
     turn(-90); // Turn left 45 degrees
-    drive(2300, -1300); // Drive backwards towards the cup
+    drive(2130, -1300); // Drive backwards towards the cup
     turn(-96);
     drive(2100, -1300);
     square_up_black_line(600);
@@ -362,7 +362,7 @@ int main() {
     drive(2550, -1300);
     move_servo_up_or_open_claw(1, 820, 1750, 50);
     turn(90);
-    drive(1300, -1300);
+    drive(1470, -1300);
     turn(-45); // Turn 45 degrees
     drive(300, 1300); // drives forward a bit
     turn(-47); // Turn 45 degrees again
@@ -374,7 +374,7 @@ int main() {
     drive(500, 1300); // Drive forward a bit
     turn(180);
     square_up_black_line(600);
-    drive(790, 1300);
+    drive(700, 1300);
     move_servo_down_or_close_claw(1, 1750, 1650, 50);
     move_servo_up_or_open_claw(0, 450, 1300, 50);
     move_servo_up_or_open_claw(1, 1650, 1750, 50);
