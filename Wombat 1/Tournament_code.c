@@ -1,6 +1,6 @@
 /*
 Contributers: 
-Nimish Ninjhawan - Programer
+Nimish Nijhawan - Programer
 Roger Huynh - Programer
 Vincent Tran - Coach
 
