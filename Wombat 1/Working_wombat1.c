@@ -360,7 +360,7 @@ int main() {
     drive(4250, 1300);
     move_servo_down_or_close_claw(0, 820, 400, 50);
     drive(2550, -1300);
-    move_servo_up_or_open_claw(1, 820, 1750, 50);
+    move_servo_up_or_open_claw(1, 700, 1750, 50);
     turn(90);
     drive(1470, -1300);
     turn(-45); // Turn 45 degrees
