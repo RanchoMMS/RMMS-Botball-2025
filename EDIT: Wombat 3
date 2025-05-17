@@ -1,0 +1,146 @@
+//CODE: USE THIS
+#include <kipr/wombat.h>
+#include <stdlib.h>
+#define compensation_rate 0.5
+
+void line_follow(int distance, int speed) { //Declare function for line follow
+    //Clear motor position counters
+    cmpc(0);
+    while (abs(gmpc(0)) < distance) { //Make a while loop to follow line
+        int error = analog(3) + 3200; //Declare error variable
+        float speed_modifier = error * compensation_rate; //Declare speed_modifier variable
+        mav(1, speed - speed_modifier);
+        mav(3, speed + speed_modifier);
+    }
+}
+
+void square_up(int speed) {
+    float go_back = 0.6; //Make a go back variable and adjust it if needed when testing later on
+    float grey_value = (2700 + 3760) / 2; //Make a grey value variable to check for white and black surfaces
+    while(analog(5) < grey_value || (analog(5) < grey_value)) { //While loop for squaring up
+        if (analog(5) < grey_value) { //Check if right sensor is on white surface
+            //the right sensor is on white
+            mav(1, speed);
+        }else { //Check if right sensor is on black surface
+            //right sensor is on black
+            mav(1, -speed * go_back);
+        }
+        if (analog(3) < grey_value) { //Check if left sensor is on white surface
+            //the left sensor is on white
+            mav(3,speed);
+        }else { //Check if left sensor is on black surface
+            //left sensor is on black
+            mav(3,-speed*go_back);
+        }
+    }
+    //Lock the motors
+    mav(1,0);
+    mav(3,0);
+    msleep(50);
+}
+
+void turn(int distance, int speed) {     //declaring a variable for turning
+
+    cmpc(0);   //clearing the motor position counter
+
+    while(abs(gmpc(0) < distance)) {    //getting the motor position for travelling a certain distance
+        float change = 3600/190;  //declaring a variable
+        float speed_modifier = 430;  //declaring a variable
+
+        if(analog(3) < change) {
+            //these will help you arc to turn
+            mav(1,speed+speed_modifier);
+            mav(3,speed-speed_modifier);
+        }
+        else {
+            //these two will help you arc to get the right position
+            mav(1,speed-speed_modifier);
+            mav(3,speed+speed_modifier);
+        }
+    }
+
+    mav(1,0);   //for locking the motors
+    mav(3,0);
+    msleep(50);
+}
+
+void move_servo_down_or_close_claw(int port, int start_pos, int end_pos, int step) {
+    for (int pos = start_pos; pos >= end_pos; pos -= step) {
+        set_servo_position(port, pos);
+        msleep(100);
+    }
+}
+
+int main() {
+enable_servos();
+    set_servo_position(2,520);
+    msleep(1000);
+    
+    set_servo_position(1,1200);
+    msleep(1000);
+    
+    set_servo_position(2,900);
+    msleep(1000);
+    
+    mav(1,700);
+    mav(3,-700);
+    msleep(2000);
+    
+    turn(800,1200);
+    
+    mav(1,900);
+    mav(3,-900);
+    msleep(5400);
+    
+    turn(1000,-1200);
+    
+    mav(1,-800);
+    mav(3,800);
+    msleep(1200);
+    
+    square_up(700);
+    line_follow(2900,1100);
+    square_up(700);
+
+    mav(1,0);
+    mav(3,0);
+    msleep(50);
+
+    line_follow(3200,600);
+    
+    mav(1,0);
+    mav(3,0);
+    msleep(500);
+
+    turn(1000,1200);
+    
+    mav(1,0);
+    mav(3,0);
+    msleep(500);
+    
+    mav(1,-500);
+    mav(3,500);
+    msleep(1000);
+
+    move_servo_down_or_close_claw(2,900,200,20);
+    
+    mav(1,1000);
+    mav(3,-1000);
+    msleep(1000);
+    
+    set_servo_position(1,450);
+    msleep(500);
+    
+    set_servo_position(2,900);
+    msleep(1000);
+    
+    turn(2000,1200);
+    
+    mav(1,500);
+    mav(3,-500);
+    msleep(700);
+    
+    set_servo_position(1,1000);
+    msleep(1000);
+    
+}
