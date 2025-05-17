@@ -72,75 +72,70 @@ void move_servo_down_or_close_claw(int port, int start_pos, int end_pos, int ste
 }
 
 int main() {
+
+wait_for_light();
+shut_down_in(119);
 enable_servos();
-    set_servo_position(2,520);
+    set_servo_position(2,520);  //lowers arm to fit in start box
     msleep(1000);
     
-    set_servo_position(1,1200);
+    set_servo_position(1,1200);  //opens claw to fit in start box
     msleep(1000);
     
-    set_servo_position(2,900);
+    set_servo_position(2,900);   //raises claw to move out of start box
     msleep(1000);
     
-    mav(1,700);
+    mav(1,700);   //drives forward in start box
     mav(3,-700);
     msleep(2000);
     
-    turn(800,1200);
+    turn(800,1200);   //turns to face line out of start box
     
-    mav(1,900);
+    mav(1,900);   //drives to position itself
     mav(3,-900);
     msleep(5400);
     
-    turn(1000,-1200);
+    turn(1000,-1200);   //turns to square up on opposing black line
     
-    mav(1,-800);
+    mav(1,-800);     //drives a bit back to accurately square up
     mav(3,800);
     msleep(1200);
     
-    square_up(700);
-    line_follow(2900,1100);
-    square_up(700);
+    square_up(700);   //squares up on opposing black line
+    line_follow(2900,1100);   //line follows backwards on an opposing line running across the board
+    square_up(700);    //squares up on black line
 
-    mav(1,0);
-    mav(3,0);
-    msleep(50);
-
-    line_follow(3200,600);
+    line_follow(3200,600);    //continues line following on the long black line
     
-    mav(1,0);
+    mav(1,0);        //pauses for half a second
     mav(3,0);
     msleep(500);
 
-    turn(1000,1200);
+    turn(1000,1200);    //turns to grab potato
     
-    mav(1,0);
+    mav(1,0);     //pauses for half a second
     mav(3,0);
     msleep(500);
     
-    mav(1,-500);
+    mav(1,-500);    //drives back a little to align with pantry
     mav(3,500);
-    msleep(1000);
+    msleep(700);
 
-    move_servo_down_or_close_claw(2,900,200,20);
-    
-    mav(1,1000);
-    mav(3,-1000);
-    msleep(1000);
-    
-    set_servo_position(1,450);
+    move_servo_down_or_close_claw(2,900,200,20);    //slowly moves down arm to grab potato
+
+    set_servo_position(1,450);   //closes the claw around the potato
     msleep(500);
     
-    set_servo_position(2,900);
+    set_servo_position(2,900);  //raises arm up
     msleep(1000);
     
-    turn(2000,1200);
+    turn(2000,1200);     //turns a 180 to face the potato frier
     
-    mav(1,500);
+    mav(1,500);     //moves forward to align with top of potato frier
     mav(3,-500);
     msleep(700);
     
-    set_servo_position(1,1000);
+    set_servo_position(1,1000);    //opens claw to release potato
     msleep(1000);
     
 }
