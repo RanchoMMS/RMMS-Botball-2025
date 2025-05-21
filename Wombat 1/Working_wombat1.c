@@ -52,14 +52,17 @@ int Set_servo_position(int port, int value) {
 
 // Make a drive function using encoders for precision
 void drive(int distance, int speed) {
-    cmpc(0);
-    cmpc(3);
-    while (abs(gmpc(0)) < distance) {
+    cmpc(0); // Reset left wheel counter position
+    cmpc(3); // Reset right wheel counter position
+    while (abs(gmpc(0)) < distance) { // Drive until given distance
 
-        mav(LEFT, speed*1);
-        mav(RIGHT, speed*1);
+	// Drive both wheels forward
+        mav(LEFT, speed);
+        mav(RIGHT, speed);
 
     }
+
+    // Lock motors after driving given distance
     mav(0, 0);
     mav(3, 0);
     msleep(20);
