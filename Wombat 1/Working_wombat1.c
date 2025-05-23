@@ -25,29 +25,24 @@ void ow_turnl_90() {
 }
 
 // Make a servo position function to limit servo stress for the later slow servo function
-int Set_servo_position(int port, int value) {
-    enable_servos();
+void Set_servo_position(int port, int value) {
+    enable_servos(); // Enable servos to make sure they activate
     if (port == 0 && (value < 320 || value > 2000)) { // Servo limit for port 0 is 543 to 2000
         printf("Value exceeds limit\n");
-        return 0;
     }
     else if (port == 1 && (value < 750 || value > 1850)) { // Servo limit for port 1 is 850 to 1566
         printf("Value exceeds limit\n");
-        return 0;
     }
     else if (port == 2 && (value < 430 || value > 2000)) { // Servo limit for port 2 is 430 to 2000
         printf("Value exceeds limit\n");
-        return 0;
     }
     else if (port == 3 && (value < 30 || value > 1940)) { // Servo limit for port 3 is 641 to 1640
         printf("Value exceeds limit\n");
-        return 0;
     }
     else { // If the input doesn't exceed limit, execute the set_servo_position function
         set_servo_position(port, value);
-        return 1;
     }
-    disable_servos();
+    disable_servos(); // Turn off servos to save battery
 }
 
 // Make a drive function using encoders for precision
