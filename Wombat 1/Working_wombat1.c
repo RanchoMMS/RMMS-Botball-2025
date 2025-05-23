@@ -192,24 +192,27 @@ int decidecup(int look){
 
 // Function for turning at different angles
 void turn(int angle){
+    // If specified angle is less than 0, turn left
     if (angle < 0){
         mav(RIGHT, 500);
         mav(LEFT, -500);
 
-    }else{
+    }else{ // If specified angle is larger than or equal to 0, turn right
         mav(RIGHT, -500);
         mav(LEFT, 500);
     }
 
+    // Use this formula to figure out how long to turn
     angle = abs(angle);
     angle = angle * 2500;
     angle = angle/90;
 
     msleep(angle);
 
+    // Lock the motors after turning
     mav(0,0);
     mav(3,0);
-
+    msleep(10);
 }
 
 int distance_from_cup = 1200;
