@@ -81,22 +81,22 @@ void move_servo_down_or_close_claw(int port, int start_pos, int end_pos, int ste
 
 // Make a square up function for black lines
 void square_up_black_line(int speed) {
-    float go_back = 0.7; //Make a go back variable and adjust it if needed when testing later on
+    float go_back = 0.7; //Make a go back variable to adjust speed during square up
     float grey_value = 3000; //Make a grey value variable to check for white and black surfaces
     while(analog(3) < grey_value || (analog(0) < grey_value)) { //While loop for squaring up
         if (analog(3) < grey_value) { //Check if right sensor is on white surface
             //the right sensor is on white
-            mav(3, speed);
+            mav(3, speed); // Right motor drive forward
         }else { //Check if right sensor is on black surface
             //right sensor is on black
-            mav(3, -speed * go_back);
+            mav(3, -speed * go_back); // Turns to align sensors
         }
         if (analog(0) < grey_value) { //Check if left sensor is on white surface
             //the left sensor is on white
-            mav(0, speed);
+            mav(0, speed); // Left motor drive forward
         }else { //Check if left sensor is on black surface
             //left sensor is on black
-            mav(0, -speed * go_back);
+            mav(0, -speed * go_back); // Turns to align sensors
         }
     }
     //Lock the motors
