@@ -224,8 +224,9 @@ void drive_until_cup() {
 
 int whatcolor = 1; // 0 for red, 1 for green
 
-//  start pos for port 3 1013, move later to 1375
+
 int main() {
+    // This while loop makes the robot unable to move until we press the green or red button
     while (digital(0) == 0 && digital(1)==0){
         msleep(1);
     }
@@ -236,31 +237,39 @@ int main() {
         whatcolor = 0;
         printf("GO FOR RED");
     }
+    // Long pause to get ready
     pause();
     pause();
     pause();
     pause();
     pause();
     pause();
-	set_servo_position(3,990);
-    wait_for_light(1);
-    shut_down_in(119);
- 
-    camera_open();
 
-    enable_servos();
-    move_servo_up_or_open_claw(3, 1013, 1375, 20);
+    // Reset the back arm (port 3) to fit in the height limit
+    set_servo_position(3,990);
+
+    // Game officially begins. No touching the robot
+    wait_for_light(1);
+    shut_down_in(119); // Automatically turns off after 119 seconds
+ 
+    camera_open(); // Turns on camera
+
+    enable_servos(); // Enable servos
+
+    move_servo_up_or_open_claw(3, 1013, 1375, 20); // Raise the back arm up
+
+    // Long pause for the other robot to get out of the starting box
     mav(0,0);
     mav(0,0);
     msleep(3000);
-    enable_servos();
 
     move_servo_down_or_close_claw(0, 1300, 900, 50); // Reset claw
-    turn(15);
-    drive(1800, -1300); // Drive back to square up
-
+    turn(15); // Turns a bit so that later it doesn't hit pvc while turning
+    drive(1800, -1300); // Drive back towards the pvc pipe
     turn(-15);
     drive(1200, -1300); // Drive back to square up
+
+    // Long pause to wait for the other robot
     pause();
     pause();
     pause();
@@ -268,29 +277,24 @@ int main() {
     pause();
     pause();
     pause();
-    
-    
-    
-    
 
-
+    // Turns to prepare to square up in front of the black line
     mav(LEFT,0);
     mav(RIGHT,1300);
     msleep(2000);
-  
-	turn(-20);
-
-
+    turn(-20);
 
     square_up_black_line(600); // Square up
     move_servo_down_or_close_claw(1, 1600, 1000, 50); //Reset arm
     set_servo_position(2,1744);
+
     //Deciding which direction to go depending on the cup
     int firstcup = decidecup(whatcolor);
     int blue = decidecup(2);
 
     printf("firstcup pos is %d and blue cup %d\n", firstcup,blue);
-    
+
+    // If the cup is in the middle or right, go for it. Else, just go for the middle
     if (firstcup == 2){
         turn(-2);
         drive(3400, 1300);
@@ -339,59 +343,61 @@ int main() {
     drive(2800, 1000); // Drive towards the ice
     turn(90); // Turn 90 degrees right
     drive(1500, -1000); // Squares up against pvc pipe in front of ice
-    drive(300, 1000); // Moves forward a bit
-    turn(2);
+    drive(300, 1000); // Moves forward a bit to prepare grabbing ice
+    turn(2); // Turns to align itself
+
+    // Preparing claw to grab ice
     set_servo_position(2,1270);
     msleep(500);
+
     move_servo_down_or_close_claw(3, 1300, 50, 50); // Turn arm down
     move_servo_down_or_close_claw(2, 1270, 430, 50); // Close claw and grab ice
     pause();
     move_servo_up_or_open_claw(3, 50, 1300, 30); // Turn arm up
+    // Long pause to prevent servo lag
     pause();
     pause();
     pause();
     pause();
     turn(-90); // Turn left 45 degrees
     drive(2130, -1300); // Drive backwards towards the cup
-    turn(-96);
-    drive(2100, -1300);
-    square_up_black_line(600);
+    turn(-96); // Turns towards the drinks with a bit of buffer
+    drive(2100, -1300); // Moves back to square up against black line
+    square_up_black_line(600); // Squares up
+
+    // Preparing front arm and claw for grabbing the drink
     move_servo_down_or_close_claw(1, 1750, 700, 50);
     move_servo_down_or_close_claw(0, 1050, 950, 50);
+
+    // Drive towards the drink
     drive(4250, 1300);
-    move_servo_down_or_close_claw(0, 820, 400, 50);
-    drive(2550, -1300);
-    move_servo_up_or_open_claw(1, 700, 1750, 50);
-    turn(90);
-    drive(1470, -1300);
+    move_servo_down_or_close_claw(0, 820, 400, 50); // Close claw and grab drink
+    drive(2550, -1300); // Drive backwards to the cup
+    move_servo_up_or_open_claw(1, 700, 1750, 50); // Turn front arm up
+    turn(90); // Turn 90 degrees
+    drive(1470, -1300); // Move backwards to align against cup
     turn(-45); // Turn 45 degrees
     drive(300, 1300); // drives forward a bit
     turn(-47); // Turn 45 degrees again
-   // move_servo_down_or_close_claw(3, 1900, 1500, 40); // Lower arm down a bit to ensure that ice don't fall out of cup
-    turn(-6);
-    drive(150, 1300);
+    turn(-6); // Add a buffer to make sure back claw is aligned with cup
+    drive(150, 1300); // Drive forward
     move_servo_up_or_open_claw(2, 430, 1750, 40); // Release claw to put poms in
-   // move_servo_up_or_open_claw(3, 1500, 1900, 40); // Raise arm up again
     drive(500, 1300); // Drive forward a bit
-    turn(180);
-    square_up_black_line(600);
-    drive(700, 1300);
+    turn(180); // Makes a 180 degree turn to put the drink in
+    square_up_black_line(600); // Squares up against a convienient black line
+    drive(700, 1300); // Drives forward to align claw with the cup
+
+    // Release drink into cup
     move_servo_down_or_close_claw(1, 1750, 1650, 50);
     move_servo_up_or_open_claw(0, 450, 1300, 50);
     move_servo_up_or_open_claw(1, 1650, 1750, 50);
+    // Moves back and prepares to grab the cup
     drive(1100, -1300);
-    move_servo_down_or_close_claw(1, 1750, 1000, 50);
-    square_up_black_line(600);
-    drive(70, 500);
-    move_servo_down_or_close_claw(0, 1300, 600, 50);
-    turn(-45);
-    /*drive(200,1300);
-    turn(-65);
-    drive(3800, 1300);
-    move_servo_up_or_open_claw(1, 1000, 1300, 40);
-    turn(45);
-    square_up_black_line(600);
-    move_servo_down_or_close_claw(1, 1300, 1000, 40);*/
-    move_servo_up_or_open_claw(0, 600, 1000, 40);
+    move_servo_down_or_close_claw(1, 1750, 1000, 50); // Move front arm down
+    square_up_black_line(600); // Squares up against previous black line
+    drive(70, 500); // Add a buffer to make sure we grab the cup
+    move_servo_down_or_close_claw(0, 1300, 600, 50); // Close claw and grab cup
+    turn(-45); // Turns 45 degrees so that the cup is not on the black line
+    move_servo_up_or_open_claw(0, 600, 1000, 40); // Release cup
     return 0;
 }
